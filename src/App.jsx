@@ -18,7 +18,7 @@ const App = () => {
       <div className="App" id={theme}>
         <Welcome>
           <ToggleDarkMode size={40} />
-          <ButtonLink to={"/login"}>Get Started</ButtonLink>
+          <ButtonLink to={"/groq"}>Get Started</ButtonLink>
         </Welcome>
       </div>
     </ThemeContext.Provider>

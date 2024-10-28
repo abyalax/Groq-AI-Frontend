@@ -41,14 +41,15 @@ const Groq = (props) => {
     if (!content) return;
     const userMessage = { userId, sender: "user", textMessage: content };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
-    saveMessageToDB(userMessage);
-
+    // saveMessageToDB(userMessage);
+    
     try {
       setLoading(true);
       const aiResponse = await requestToGroqAI(message);
       const botMessage = { userId, sender: "bot", textMessage: aiResponse };
       setMessages((prevMessages) => [...prevMessages, botMessage]);
-      saveMessageToDB(botMessage);
+      // saveMessageToDB(botMessage);
+      document.getElementById("form").reset();
     } catch (error) {
       console.log(error);
     } finally {
@@ -103,7 +104,7 @@ const Groq = (props) => {
         </div>
       </div>
 
-      <form className="fixed bottom-2 flex flex-col gap-4 py-4 max-w-3xl w-full text-black" onSubmit={handleSubmit}>
+      <form id="form" className="fixed bottom-2 flex flex-col gap-4 py-4 max-w-3xl w-full text-black" onSubmit={handleSubmit}>
         <input type="text" placeholder="Ketik Permintaan disini....." id="content" className="py-2 px-4 font-bold rounded-full" />
         <button type="submit" className="bg-blue-800 py-2 px-4 font-bold text-white rounded-full">
           Kirim
