@@ -1,0 +1,13 @@
+#root {
+    margin: 0;
+    padding: 0;
+}
+body #dark {
+    background-color: #212121;
+    color: #fff;
+}
+
+body #light {
+    background-color: #fff;
+    color: #1e1e1e;
+}
