@@ -21,9 +21,9 @@ function Dashboard() {
       });
   };
 
-
   const endpoint = "http://localhost:3000/api/v1/users";
   const [users, setUsers] = useState([]);
+
   const fetchUser = async () => {
     try {
       const response = await fetch(endpoint);
@@ -33,10 +33,9 @@ function Dashboard() {
       const res = await response.json();
       if (Array.isArray(res.data)) {
         console.log("Success:", res.data);
-
         setUsers(res.data);
       } else {
-        console.error("Data format is incorrect", data);
+        console.error("Data format is incorrect", res.data);
       }
       console.log(users.length);
     } catch (error) {

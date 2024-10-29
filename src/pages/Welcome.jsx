@@ -1,6 +1,8 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { ThemeContext } from "../App";
 import "../components/Elements/ToggleTheme/Theme.css";
+import PropTypes from "prop-types";
+
 const Welcome = (props) => {
   const { theme } = useContext(ThemeContext);
   const {children} = props
@@ -15,4 +17,9 @@ const Welcome = (props) => {
     </div>
   );
 };
+
+Welcome.propTypes = {
+  children: PropTypes.node,
+}
+
 export default Welcome

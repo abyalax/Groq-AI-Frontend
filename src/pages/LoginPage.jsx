@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ThemeContext } from "../App";
 import Authlayout from "../components/Layouts/AuthLayouts";
 import FormLogin from "../components/Fragments/FormLogin";
 import "../components/Elements/ToggleTheme/Theme.css";
 import ToggleDarkMode from "../components/Elements/ToggleTheme/Theme";
+import PropTypes from "prop-types";
+
 const LoginPage = (props) => {
   const [theme, setTheme] = useState("dark");
   const { children } = props;
@@ -27,4 +29,10 @@ const LoginPage = (props) => {
     </ThemeContext.Provider>
   );
 };
+
+LoginPage.propTypes = {
+  children: PropTypes.node,
+}
+
+
 export default LoginPage;

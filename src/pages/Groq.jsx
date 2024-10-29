@@ -7,32 +7,14 @@ import "../index.css";
 import "../App.css";
 import "../components/Elements/ToggleTheme/Theme.css";
 import TypeIt from "typeit-react";
-import robotIcon from "../assets/robotIcon.png";
+import PropTypes from "prop-types";
+import { img, svg } from "../assets/getter";
 
 const Groq = (props) => {
   const { children } = props;
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const userId = localStorage.getItem('userId')
-
-  const saveMessageToDB = async (message) => {
-    try {
-      const response = await fetch('http://localhost:3000/api/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ...message, userId }),
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const result = await response.json();
-      console.log('Message saved successfully:', result);
-    } catch (error) {
-      console.error('Error saving message to database:', error);
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,14 +23,11 @@ const Groq = (props) => {
     if (!content) return;
     const userMessage = { userId, sender: "user", textMessage: content };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
-    // saveMessageToDB(userMessage);
-    
     try {
       setLoading(true);
       const aiResponse = await requestToGroqAI(message);
       const botMessage = { userId, sender: "bot", textMessage: aiResponse };
       setMessages((prevMessages) => [...prevMessages, botMessage]);
-      // saveMessageToDB(botMessage);
       document.getElementById("form").reset();
     } catch (error) {
       console.log(error);
@@ -59,8 +38,8 @@ const Groq = (props) => {
 
   return (
     <main className={`flex flex-col min-h-screen items-center w-full`}>
-      <div className="fixed w-full">
-        <h1 className="text-4xl font-bold text-blue-800 bg-black p-2">REACT | GROQ AI</h1>
+      <div className="fixed w-full flex justify-center items-center flex-col">
+        <h1 className="text-4xl font-bold text-blue-800 p-2 text-center">WELCOME | GROQ AI</h1>
         {children}
       </div>
 
@@ -68,9 +47,9 @@ const Groq = (props) => {
         <div className="flex flex-1 w-full mb-12 text-start rounded-md">
           {!messages.length ? (
             <div className="flex mt-40">
-              <img src={robotIcon} className="w-12 h-12 " />
+              <img src={img.robot} className="w-12 h-12 " />
               <h2 className="text-xl text-blue-400">
-                Halo saya AbyaBot, dari Groq AI. Ada yang bisa saya bantu?
+                Halo saya bot buatan Abya, dari Groq AI. Ada yang bisa saya bantu?
               </h2>
             </div>
           ) : null}
@@ -81,7 +60,7 @@ const Groq = (props) => {
                 {msg.sender === "bot" ? (
                   <div className="mx-4">
                     <TypeIt options={{ speed: 10 }}>
-                      <img src={robotIcon} className="w-12 h-12 " />
+                      <img src={img.robot} className="w-12 h-12 " />
                       <SyntaxHighlighter
                         wrapLongLines={true}
                         className="flex-1 rounded-md p-4"
@@ -104,14 +83,19 @@ const Groq = (props) => {
         </div>
       </div>
 
-      <form id="form" className="fixed bottom-2 flex flex-col gap-4 py-4 max-w-3xl w-full text-black" onSubmit={handleSubmit}>
-        <input type="text" placeholder="Ketik Permintaan disini....." id="content" className="py-2 px-4 font-bold rounded-full" />
-        <button type="submit" className="bg-blue-800 py-2 px-4 font-bold text-white rounded-full">
-          Kirim
-        </button>
-      </form>
+      <div className="fixed bottom-6 w-full">
+        <form id="form" className="relative mx-auto flex flex-col gap-4 py-4 max-w-3xl w-full" onSubmit={handleSubmit}>
+          <input type="text" placeholder="Ketik Perintah disini....." id="content" className="py-3 px-4 font-bold rounded-full text-black" />
+          <button type="submit" className="absolute right-2 top-5 bg-blue-800 p-2 h-10 w-10 font-bold text-white rounded-full">
+            <img src={svg.arrow} className="m-auto h-full w-full" />
+          </button>
+        </form>
+      </div>
     </main>
   );
 };
 
+Groq.propTypes = {
+  children: PropTypes.node.isRequired,
+}
 export default Groq;

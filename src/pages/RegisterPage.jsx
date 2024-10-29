@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ThemeContext } from "../App";
 import Authlayout from "../components/Layouts/AuthLayouts";
 import FormRegister from "../components/Fragments/FormRegister";
 import "../components/Elements/ToggleTheme/Theme.css";
 import ToggleDarkMode from "../components/Elements/ToggleTheme/Theme";
+import PropTypes from "prop-types";
 
 const RegisterPage = (props) => {
   const [theme, setTheme] = useState("dark");
@@ -29,4 +30,9 @@ const RegisterPage = (props) => {
     </ThemeContext.Provider>
   );
 };
+
+RegisterPage.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
 export default RegisterPage;
